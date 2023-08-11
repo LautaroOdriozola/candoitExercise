@@ -1,0 +1,12 @@
+package com.group.candoit.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController()
+@RequestMapping("/localidad")
+public class LocalidadController {
+
+
+
+}
