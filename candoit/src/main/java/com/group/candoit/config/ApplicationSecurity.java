@@ -35,13 +35,12 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+
         http.authorizeRequests()
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/location/all").hasAnyAuthority("ADMIN", "LECTURA")
-                .antMatchers("/location/all-with-latest-weather").hasAnyRole("ADMIN" );
-
-
-        //http.authorizeRequests().anyRequest().permitAll();
+                .antMatchers("/location/all").authenticated()
+                .antMatchers("/location/all").authenticated()
+                .anyRequest().authenticated();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(
@@ -53,7 +52,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                         }
                 );
 
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

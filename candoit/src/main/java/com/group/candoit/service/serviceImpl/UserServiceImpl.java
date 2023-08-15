@@ -4,7 +4,9 @@ import com.group.candoit.config.JwtTokenUtil;
 import com.group.candoit.dto.AuthRequestDto;
 import com.group.candoit.dto.AuthResponseDto;
 import com.group.candoit.dto.UserDto;
+import com.group.candoit.entity.Role;
 import com.group.candoit.entity.UserEntity;
+import com.group.candoit.repository.RolesRepository;
 import com.group.candoit.repository.UserRepository;
 import com.group.candoit.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -15,13 +17,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RolesRepository rolesRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -43,6 +50,9 @@ public class UserServiceImpl implements UserService {
 
         String accessToken = jwtUtil.generateAccessToken(userEntity);
         userEntity.setToken(accessToken);
+        Optional<Role> roleOptional = rolesRepository.findByName("LECTURA");
+        roleOptional.ifPresent(role -> userEntity.setUserRoles(Stream.of(role).collect(Collectors.toSet())));
+
         return userRepository.save(userEntity);
     }
 
