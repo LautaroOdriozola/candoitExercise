@@ -1,19 +1,23 @@
 package com.group.candoit.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+
+@Table(name = "weather")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "clima")
-public class Clima {
+public class Weather {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long clima_id;
+    private Long weather_id;
     @Column(name="_id")
     private Long id;
     @Column(name="humidity")

@@ -1,9 +1,9 @@
 package com.group.candoit.repository;
 
-import com.group.candoit.entity.Clima;
+import com.group.candoit.entity.Weather;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClimaRepository extends JpaRepository<Clima, Long> {
+public interface WeatherRepository extends JpaRepository<Weather, Long> {
 }
