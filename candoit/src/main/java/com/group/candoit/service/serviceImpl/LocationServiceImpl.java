@@ -1,5 +1,6 @@
 package com.group.candoit.service.serviceImpl;
 
+import com.group.candoit.dto.LocationWithoutWeatherDto;
 import com.group.candoit.dto.WeatherDto;
 import com.group.candoit.dto.LocationDto;
 import com.group.candoit.entity.Location;
@@ -56,7 +57,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<LocationDto> getLastLocations() {
+    public List<LocationDto> getAllWithLatestWeather() {
 
         List<Location> locations = locationRepository.getLastLocations();
         assert locations!=null;
@@ -70,5 +71,13 @@ public class LocationServiceImpl implements LocationService {
                     locationDto.setWeather(weatherDto);
                     return locationDto;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LocationWithoutWeatherDto> getAll() {
+        List<LocationDto> locationDtos = getAllWithLatestWeather();
+        return locationDtos.stream()
+                .map(locationDto -> modelMapper.map(locationDto, LocationWithoutWeatherDto.class))
+                .collect(Collectors.toList());
     }
 }

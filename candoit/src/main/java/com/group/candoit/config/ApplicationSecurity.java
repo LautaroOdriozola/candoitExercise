@@ -35,14 +35,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        /*http.authorizeRequests()
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/task/create").authenticated()
-                .antMatchers("/task/setTaskComplete/{id}").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/task/{id}").authenticated();*/
-        //.anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/location/all").hasAnyAuthority("ADMIN", "LECTURA")
+                .antMatchers("/location/all-with-latest-weather").hasAnyRole("ADMIN" );
 
-        http.authorizeRequests().anyRequest().permitAll();
+
+        //http.authorizeRequests().anyRequest().permitAll();
 
         http.exceptionHandling()
                 .authenticationEntryPoint(

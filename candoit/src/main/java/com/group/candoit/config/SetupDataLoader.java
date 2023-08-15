@@ -67,6 +67,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             userRead = userReadOptional.get();
         }
 
+
         usuarioRepository.saveAll(Arrays.asList(userAdmin, userRead));
         alreadySetup = true;
     }
